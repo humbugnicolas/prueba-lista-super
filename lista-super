@@ -1,0 +1,148 @@
+import os
+
+#Creamos la lista de productos
+lista_productos = []
+
+#Funcion para limpiar la consola
+def cls():
+    os.system('cls' if os.name=='nt' else 'clear')
+
+#Obtiene el nombre del usuario
+def ingreso_usuario():
+    nombre = input("Ingrese su nombre por favor: ")
+    return nombre
+
+#Ingresar producto a la lista
+def ingresar_producto_menu(lista_productos):
+    seguir_ingresando = True
+
+    while seguir_ingresando == True:
+        print("1) Ingresar solo un producto")
+        print("2) Ingresar dos o mas")
+        print("3) Volver al menu principal")
+        opcion = int(input("Ingrese opcion deseada: "))
+        os.system ("cls")
+        
+        if opcion == 1:
+            nombre_producto = input("Ingrese el nombre del producto: ")
+            nombre_producto = nombre_producto.title()
+            lista_productos.append(nombre_producto)
+            input(nombre_producto + " ingresado correctamente, presione cualquier tecla")
+            os.system ("cls")
+        elif opcion == 2:
+            cantidad = int(input("Ingrese la cantidad de productos: "))
+            for i  in range(0,cantidad):
+                nombre_producto = input("Ingrese nombre del pruducto: ")
+                nombre_producto = nombre_producto.title()
+                lista_productos.append(nombre_producto)
+                print("Productos ingresado correctamente")
+                
+        elif opcion == 3:
+            print("Presione cualquier tecla para volver al menu principal")            
+            input() 
+            break
+        else:
+            input("Opcion incorrecta, presione cualquier tecla para volver")
+            os.system ("cls") 
+        os.system ("cls")
+
+#Mostrar lista
+def mostrar_productos_menu(lista_productos):
+
+    #Verificamos si la lista no se encuentra vacia
+    cantidad_productos = len(lista_productos)
+
+    if cantidad_productos == 0:
+        print("La lista se encuentra vacia. Presione cualquier tecla para volver al menu principal")
+        input()
+    else:
+        print("Listado de productos")
+        for productos in lista_productos:
+            print(productos)
+        print("Presione cualquier tecla para volver al menu principal")
+        input()
+    cls()
+    
+#Borrar producto
+def borrar_producto_menu (lista_productos):
+
+    seguir_borrando = True
+
+    while seguir_borrando == True:
+        #Verificamos si la lista no se encuentra vacia
+        cantidad_productos = len(lista_productos)
+
+        if cantidad_productos == 0:
+            print("La lista se encuentra vacia")
+            print("Presione cualquier tecla para volver al menu")
+            input()
+            seguir_borrando == False
+            break
+        else:
+
+            #Mostramos los productos al usuario
+            print(lista_productos)
+            
+            #Le indicamos que ingrese el producto a borrar
+            borrar_producto = input("Ingrese el producto a borrar: ")
+            
+            #Adaptamos el producto ingresado al formato de la lista
+            borrar_producto = borrar_producto.title()
+
+            #Verificamos si el producto a borrar se encuentra en la lista
+            i = 0
+            encontrado = False
+            while i < cantidad_productos:
+                if (borrar_producto == lista_productos[i]):
+                    lista_productos.remove(borrar_producto)
+                    encontrado = True
+                    break
+                i = i + 1
+            if (encontrado == True):
+                print("El producto ingresado ha sido borrado")
+            else:
+                print("El producto ingresado no se encontro en la lista")
+
+            opcion = input("Desea seguir borrando productos? (S/N): ")
+
+            if (opcion == 'S') or (opcion == 's'):
+                seguir_borrando = True
+            else:
+                print("Presione cualquier tecla para volver al menu ")
+                input()
+                seguir_borrando = False     
+    
+#Funcion menu principal
+def menu_principal(nombre_usuario, lista_productos):
+    
+    seguir = True
+    intentos = 0
+
+    while seguir == True:
+        
+        print("Bienvenido " + nombre_usuario + " a la lista de supermercado")
+        print("1) Ingresar producto")
+        print("2) Mostrar productos")
+        print("3) Borrar producto")
+        print("4) Buscar producto")
+        print("5) Salir del programa")
+        opcion = int(input(nombre_usuario + ", ingrese la opcion deseada: "))
+        cls()
+
+        if opcion == 1:
+            ingresar_producto_menu(lista_productos)
+            
+        elif opcion == 2:
+            mostrar_productos_menu(lista_productos)
+            
+        elif opcion == 3:
+            borrar_producto_menu(lista_productos)
+
+        elif opcion == 5:
+            input("Gracias por utilizar el programa, presione cualquier tecla para salir")
+            break
+    
+        cls()
+nombre_usuario = ingreso_usuario()
+cls()
+menu_principal(nombre_usuario.title(), lista_productos)
